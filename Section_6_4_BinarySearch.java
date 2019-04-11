@@ -1,7 +1,7 @@
 
 import java.util.Arrays;
 
-public class Section_6_4_Binary_Search {
+public class Section_6_4_BinarySearch {
     
     private static int[] list = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90};
     
