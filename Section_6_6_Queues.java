@@ -28,7 +28,6 @@ Retrieves and removes the head of this queue.
 
 */
 
-
 import java.util.LinkedList;
 import java.util.Queue;
 

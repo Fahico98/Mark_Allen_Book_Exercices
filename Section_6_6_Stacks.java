@@ -21,7 +21,6 @@ Returns the 1-based position where an object is on this stack.
 
 */
 
-
 import java.util.Stack;
 
 public class Section_6_6_Stacks {
