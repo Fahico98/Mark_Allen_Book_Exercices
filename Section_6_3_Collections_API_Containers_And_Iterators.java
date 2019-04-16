@@ -4,8 +4,8 @@
 
 * boolean add(E e)
 Ensures that this collection contains the specified element (optional operation).
-* boolean addAll(Collection<? extends E> c)
 
+* boolean addAll(Collection<? extends E> c)
 Adds all of the elements in the specified collection to this collection
 (optional operation).
 
@@ -54,8 +54,6 @@ Returns an array containing all of the elements in this collection; the runtime
 type of the returned array is that of the specified array.
 
 
-
-
 ********** Iterator interface methods **********
 
 * boolean hasNext():
@@ -69,9 +67,6 @@ Removes from the underlying collection the last element returned by this iterato
 (optional operation).
 
 */
-
-
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -108,8 +103,8 @@ public class Section_6_3_Collections_API_Containers_And_Iterators{
             System.out.println(animalsIterator.next());
         }
         
-        /* For a container, any external structural modiﬁcation of this container
-        (adds, removes, and so on) will result in a 'ConcurrentModificationException'
+        /* For a container, any external structural modification of this container
+        (adds, removes, and so on) will result in a ConcurrentModificationException
         by the iterator methods when one of the methods is called. As with the
         following two code lines.*/
         
