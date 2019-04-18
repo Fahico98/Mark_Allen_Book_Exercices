@@ -1,19 +1,9 @@
 
-/*
-
-Array-based Stack...! 
-
-Note:
-a = 5; b = ++a; // a = 6, b = 6
-a = 5; b = a++; // a = 6, b = 5
-
-*/
-
-public class Section_16_1_Dynamic_Array_Implementations_Stack {
+public class Section_16_2_Linked_List_Implementations_Stack {
     
     public static void main(String[] arguments){
         
-        ArrayStack<String> papersStack = new ArrayStack();
+        ListStack<String> papersStack = new ListStack();
         
         papersStack.push("Washington Post");
         papersStack.push("Wall Street Journal");
@@ -29,7 +19,7 @@ public class Section_16_1_Dynamic_Array_Implementations_Stack {
         papersStack.push("Times");
         papersStack.push("Forbes");
         
-        System.out.println("ArrayStack...!\n");
+        System.out.println("ListStack...!\n");
         
         System.out.println(papersStack.toString());
         
@@ -45,46 +35,31 @@ public class Section_16_1_Dynamic_Array_Implementations_Stack {
     }
 }
 
-class ArrayStack<AnyType>{
+class ListStack<AnyType>{
     
-    private AnyType[] theArray;
-    private int topOfStack;
-    private static final int DEFAULT_CAPACITY = 10;
-    
-    /**
-    * @construct the stack
-    */
-    public ArrayStack(){
-        theArray = (AnyType []) new Object[DEFAULT_CAPACITY]; 
-        topOfStack = -1;
-    }
+    private ListStackNode<AnyType> topOfStack = null;
     
     /**
      * Test if the stack is logically empty.
      * @return true if empty, false otherwise. 
      */
     public boolean isEmpty(){
-        return(topOfStack == -1);
+        return(topOfStack == null);
     }
     
     /**
      * Make the stack logically empty.
      */
     public void makeEmpty(){
-        topOfStack = -1;
+        topOfStack = null;
     }
     
     /**
-     * Get the most recently inserted item in the stack, does not alter
-     * the stack.
-     * @return the most recently inserted item in the stack.
-     * @throws UnderflowException if the stack is empty.
-     */
-    public AnyType top(){
-        if(isEmpty()){
-            throw new RuntimeException("ArrayStack top");
-        }
-        return theArray[topOfStack]; 
+    * Insert a new item into the stack.
+    * @param x the item to insert.
+    */
+    public void push(AnyType x){
+        topOfStack = new ListStackNode<AnyType>(x, topOfStack);
     }
     
     /**
@@ -93,32 +68,36 @@ class ArrayStack<AnyType>{
      */
     public void pop(){
         if(isEmpty()){
-            throw new RuntimeException("ArrayStack top");
+            throw new RuntimeException("ListStack pop");
         }
-        topOfStack--;
+        topOfStack = topOfStack.next;
+    }
+    
+    /**
+    * Get the most recently inserted item in the stack, does not alter
+    * the stack.
+    * @return the most recently inserted item in the stack.
+    * @throws RuntimeException if the stack is empty.
+    */
+    public AnyType top(){
+        if(isEmpty()){
+            throw new RuntimeException( "ListStack top" );
+        }
+        return(topOfStack.element);
     }
     
     /**
      * Return and remove the most recently inserted item from the stack.
      * @return the most recently inserted item in the stack.
-     * @throws RuntimeException if the stack is empty. 
+     * @throws RuntimeException if the stack is empty.
      */
     public AnyType topAndPop(){
         if(isEmpty()){
-            throw new RuntimeException("ArrayStack top");
-        }       
-        return theArray[--topOfStack];
-    }
-    
-    /**
-     * Insert a new item into the stack. 
-     * @param x the item to insert. 
-     */
-    public void push(AnyType x){
-        if(topOfStack + 1 == theArray.length){
-            doubleArray();
+            throw new RuntimeException( "ListStack topAndPop" );
         }
-        theArray[++topOfStack] = x;
+        AnyType topItem = topOfStack.element;
+        topOfStack = topOfStack.next;
+        return topItem;
     }
     
     /**
@@ -128,21 +107,27 @@ class ArrayStack<AnyType>{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("[\n");
-        for(int i = 0; i < topOfStack; i++){
-            if(theArray[i] != null){
-                sb.append("\t").append(theArray[i]).append("\n");
-            }
+        ListStackNode<AnyType> bufferNode = topOfStack;
+        while(bufferNode != null){
+            sb.append("\t").append(bufferNode.element).append("\n");
+            bufferNode = bufferNode.next;
         }
         sb.append("]\n");
         return(new String(sb));
     }
+}
+
+class ListStackNode<AnyType>{
     
-    /**
-     * Double the size of the stack.
-     */
-    private void doubleArray(){
-        AnyType[] bufferArray = (AnyType []) new Object[2 * theArray.length];
-        System.arraycopy(theArray, 0, bufferArray, 0, theArray.length);
-        theArray = bufferArray;
+    public AnyType element;
+    public ListStackNode next;
+    
+    public ListStackNode(AnyType theElement){
+        this(theElement, null);
+    }
+    
+    public ListStackNode(AnyType theElement, ListStackNode<AnyType> n){
+        element = theElement;
+        next = n;
     }
 }

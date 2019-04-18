@@ -1,5 +1,5 @@
 
-/* 
+/*
 
 Array-based Queue...! 
 
@@ -29,13 +29,15 @@ public class Section_16_1_Dynamic_Array_Implementations_Queue {
         papersQueue.enqueue("Times");
         papersQueue.enqueue("Forbes");
         
+        System.out.println("ArrayQueue...!\n");
+        
         System.out.println(papersQueue.toString());
         
         System.out.println("-------------------------------------------------");
         
-        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the stack...!");
-        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the stack...!");
-        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the stack...!");
+        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the queue...!");
+        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the queue...!");
+        System.out.println("'" + papersQueue.dequeue() + "' has been removed of the queue...!");
         
         System.out.println("-------------------------------------------------");
         
@@ -90,8 +92,7 @@ class ArrayQueue<AnyType>{
     }
     
     /**
-     * Return and remove the least recently inserted item
-     * from the queue.
+     * Return and remove the least recently inserted item from the queue.
      * @return the least recently inserted item in the queue.
      * @throws RuntimeException if the queue is empty.
      */
@@ -119,7 +120,7 @@ class ArrayQueue<AnyType>{
     }
     
     /**
-     * @return a string whit all elements of the stack
+     * @return a string whit all elements of the queue
      */
     @Override
     public String toString(){
