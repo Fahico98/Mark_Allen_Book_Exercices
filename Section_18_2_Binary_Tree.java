@@ -1,6 +1,4 @@
 
-import java.util.NoSuchElementException;
-
 public class Section_18_2_Binary_Tree {
     
     public static void main(String[] arguments){
@@ -64,41 +62,6 @@ class IntegerBinaryTree extends BinaryTree{
                 addInteger(num, root.getRight());
             }
         }
-    }
-}
-
-abstract class TreeIterator<T>{
-    
-    protected BinaryTree<T> tree;
-    protected BinaryNode<T> current;
-    
-    /**
-     * Construct the iterator, the current position is set to null.
-     * @param theTree the tree to which the iterator is bound.
-     */
-    public TreeIterator(BinaryTree<T> theTree){
-        tree = theTree;
-        current = null;
-    }
-    
-    /**
-     * Test if current position references a valid tree item.
-     * @return true if the current position is not null; false otherwise.
-     */
-    final public boolean isValid(){
-        return(current != null);
-    }
-    
-    /**
-     * Return the item stored in the current position.
-     * @return the stored item.
-     * @exception NoSuchElementException if the current position is invalid.
-     */
-    final public T retrieve(){
-        if(current == null){
-            throw new NoSuchElementException();
-        }
-        return current.getElement();
     }
 }
 
@@ -290,7 +253,7 @@ class BinaryNode<T>{
     }
     
     /**
-     * LevelOrder method uses the ArrayQueue class defined into 
+     * printLevelOrder method uses the ArrayQueue class defined into 
      * 'Section_16_1_Dynamic_Array_Implementations_Queue.java' file, in 
      * this directory.
      */
@@ -300,7 +263,6 @@ class BinaryNode<T>{
         while(!queue.isEmpty()){
             BinaryNode<T> bufferNode = queue.dequeue();
             System.out.print(bufferNode.getElement() + " ");
-            
             if(bufferNode.getLeft() != null){
                 queue.enqueue(bufferNode.getLeft());
             }
