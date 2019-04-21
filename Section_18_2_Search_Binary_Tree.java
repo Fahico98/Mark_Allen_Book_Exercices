@@ -1,67 +1,80 @@
 
-public class Section_18_2_Binary_Tree {
+public class Section_18_2_Search_Binary_Tree{
     
     public static void main(String[] arguments){
         
-        IntegerBinaryTree numbersTree = new IntegerBinaryTree(50);
+        SearchBinaryTree numbersTree = new SearchBinaryTree(50);
         
-        numbersTree.addInteger(32);
-        numbersTree.addInteger(40);
-        numbersTree.addInteger(33);
-        numbersTree.addInteger(9);
-        numbersTree.addInteger(66);
-        numbersTree.addInteger(78);
-        numbersTree.addInteger(55);
-        numbersTree.addInteger(20);
-        numbersTree.addInteger(52);
+        numbersTree.add(32);
+        numbersTree.add(40);
+        numbersTree.add(33);
+        numbersTree.add(9);
+        numbersTree.add(66);
+        numbersTree.add(78);
+        numbersTree.add(55);
+        numbersTree.add(20);
+        numbersTree.add(52);
         
+        System.out.print("Pre-order:\t");
         numbersTree.printPreOrder();
         System.out.println("");
+        
+        System.out.print("Post-order:\t");
         numbersTree.printPostOrder();
         System.out.println("");
+        
+        System.out.print("In-order:\t");
         numbersTree.printInOrder();
         System.out.println("");
+        
+        System.out.print("Level-order:\t");
         numbersTree.printLevelOrder();
         System.out.println("");
     }
 }
 
-class IntegerBinaryTree extends BinaryTree{
+class SearchBinaryTree extends BinaryTree{
     
     private BinaryNode<Integer> root = new BinaryNode();
     
-    public IntegerBinaryTree(){
+    public SearchBinaryTree(){
         super(0);
     }
     
-    public IntegerBinaryTree(int root){
+    public SearchBinaryTree(int root){
         super(root);
     }
     
     /**
      * Recursive method.
      */
-    public void addInteger(int num){
-        this.addInteger(num, getRoot());
+    public BinaryNode add(int num){
+        return(this.addInteger(num, getRoot()));
     }
     
     /**
-     * Recursive method.
+     * @throws RuntimeException if the integer to insert already exist.
      */
-    private void addInteger(int num, BinaryNode<Integer> root){
+    private BinaryNode addInteger(int num, BinaryNode<Integer> root){
+        BinaryNode<Integer> toReturn = new BinaryNode(0);;
         if(num < root.getElement()){
             if(root.getLeft() == null){
-                root.setLeft(new BinaryNode(num));
+                toReturn = new BinaryNode(num);
+                root.setLeft(toReturn);
             }else{
                 addInteger(num, root.getLeft());
             }
-        }else{
+        }else if(num > root.getElement()){
             if(root.getRight() == null){
-                root.setRight(new BinaryNode(num));
+                toReturn = new BinaryNode(num);
+                root.setRight(toReturn);
             }else{
                 addInteger(num, root.getRight());
             }
+        }else{
+            throw new RuntimeException("Fail insertion...!");
         }
+        return(toReturn);
     }
 }
 
