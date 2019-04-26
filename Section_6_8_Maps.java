@@ -1,49 +1,49 @@
 
-/*
+/**
 
 There are many types of java maps such as HashMap, LinkedHashMap, TreeMap, EnumMap,
-WeakHashMap, HashTable and CurrentHashMap.
+WeakHashMap, HashTable and CurrentHashMap
 
 
-********** HashMap class methods **********
+* HashMap class methods
 
 * void clear()
-Removes all of the mappings from this map.
+Removes all of the mappings from this map
 
 * Object clone()
 Returns a shallow copy of this HashMap instance: the keys and values themselves
-are not cloned.
+are not cloned
 
 * boolean containsKey(Object key)
-Returns true if this map contains a mapping for the specified key.
+Returns true if this map contains a mapping for the specified key
 
 * boolean containsValue(Object value)
-Returns true if this map maps one or more keys to the specified value.
+Returns true if this map maps one or more keys to the specified value
 
 * Set<Map.Entry<K,V>> entrySet()
-Returns a Set view of the mappings contained in this map.
+Returns a Set view of the mappings contained in this map
 
 * V get(Object key)
 Returns the value to which the specified key is mapped, or null if this map
-contains no mapping for the key.
+contains no mapping for the key
 
 * boolean isEmpty()
-Returns true if this map contains no key-value mappings.
+Returns true if this map contains no key-value mappings
 
 * Set<K> keySet()
-Returns a Set view of the keys contained in this map.
+Returns a Set view of the keys contained in this map
 
 * V put(K key, V value)
-Associates the specified value with the specified key in this map.
+Associates the specified value with the specified key in this map
 
 * void putAll(Map<? extends K,? extends V> m)
-Copies all of the mappings from the specified map to this map.
+Copies all of the mappings from the specified map to this map
 
 * V remove(Object key)
-Removes the mapping for the specified key from this map if present.
+Removes the mapping for the specified key from this map if present
 
 * int size()
-Returns the number of key-value mappings in this map.
+Returns the number of key-value mappings in this map
 
 * Collection<V> values()
 Returns a Collection view of the values contained in this map.

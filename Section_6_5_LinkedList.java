@@ -1,20 +1,20 @@
 
-/*
+/**
 
 NOTES:
 
 The 'LinkedList' class implements the 'List' interface, therefore it got all 
-'List' interface methods.
+'List' interface methods
 
 To iterate a 'LinkedList' instance we have call 'ListIterator' method instead
-'Iterator'.
+'Iterator'
 
 
-********** ArrayList vs LinkedList **********
+* ArrayList vs LinkedList
 
 The ArrayList may be appropriate if insertions are performed only at the high
-end of the array. The ArrayList doubles the internal array capacity if an
-insertion at the high end would exceed the internal capacity. Although this
+end of the array, The ArrayList doubles the internal array capacity if an
+insertion at the high end would exceed the internal capacity, Although this
 gives good Big-Oh performance, especially if we add a constructor that allows
 the caller to suggest initial capacity for the internal array, the ArrayList is
 a poor choice if insertions are not made at the end, because then we must move

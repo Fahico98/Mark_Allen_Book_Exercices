@@ -1,66 +1,67 @@
-/*
 
-********** Collection interface methods **********
+/**
+
+ * Collection interface methods
 
 * boolean add(E e)
-Ensures that this collection contains the specified element (optional operation).
+Ensures that this collection contains the specified element (optional operation)
 
 * boolean addAll(Collection<? extends E> c)
 Adds all of the elements in the specified collection to this collection
-(optional operation).
+(optional operation)
 
 * void clear()
-Removes all of the elements from this collection (optional operation).
+Removes all of the elements from this collection (optional operation)
 
 * boolean contains(Object o)
-Returns true if this collection contains the specified element.
+Returns true if this collection contains the specified element
 
 * boolean containsAll(Collection<?> c)
 Returns true if this collection contains all of the elements in the specified
-collection.
+collection
 
 * boolean equals(Object o)
-Compares the specified object with this collection for equality.
+Compares the specified object with this collection for equality
 
 * int hashCode()
-Returns the hash code value for this collection.
+Returns the hash code value for this collection
 
 * boolean isEmpty()
-Returns true if this collection contains no elements.
+Returns true if this collection contains no elements
 
 * Iterator<E> iterator()
-Returns an iterator over the elements in this collection.
+Returns an iterator over the elements in this collection
 
 * boolean remove(Object o)
-Removes a single instance of the specified element from this collection, if it is
-present (optional operation).
+Removes a single instance of the specified element from this collection,
+if it is present (optional operation)
 
 * boolean removeAll(Collection<?> c)
-Removes all of this collection's elements that are also contained in the specified
-collection (optional operation).
+Removes all of this collection's elements that are also contained in the
+specified collection (optional operation)
 
 * boolean retainAll(Collection<?> c)
-Retains only the elements in this collection that are contained in the specified
-collection (optional operation).
+Retains only the elements in this collection that are contained in the
+specified collection (optional operation)
 
 * int size()
-Returns the number of elements in this collection.
+Returns the number of elements in this collection
 
 * Object[] toArray()
-Returns an array containing all of the elements in this collection.
+Returns an array containing all of the elements in this collection
 
 * <T> T[] toArray(T[] a)
-Returns an array containing all of the elements in this collection; the runtime
-type of the returned array is that of the specified array.
+Returns an array containing all of the elements in this collection; the
+runtime type of the returned array is that of the specified array
 
 
-********** Iterator interface methods **********
+ * Iterator interface methods
 
 * boolean hasNext():
-Returns true if the iteration has more elements.
+Returns true if the iteration has more elements
 
 * E next()
-Returns the next element in the iteration.
+Returns the next element in the iteration
 
 * void remove()
 Removes from the underlying collection the last element returned by this iterator

@@ -56,7 +56,7 @@ class SearchBinaryTree extends BinaryTree{
      * @throws RuntimeException if the integer to insert already exist.
      */
     private BinaryNode addInteger(int num, BinaryNode<Integer> root){
-        BinaryNode<Integer> toReturn = new BinaryNode(0);;
+        BinaryNode<Integer> toReturn = new BinaryNode(0);
         if(num < root.getElement()){
             if(root.getLeft() == null){
                 toReturn = new BinaryNode(num);
