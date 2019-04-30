@@ -11,11 +11,9 @@ public class Section_19_4_AVL_Tree{
         avlTree.AVLadd(50);
         avlTree.AVLadd(25);
         
-        //avlTree.printInOrder();
-        
-        //System.out.println("");
-        
-        //System.out.println(avlTree.height());
+        System.out.println("AVL Tree printed in Level Order Transversal:");
+        avlTree.printLevelOrder();
+        System.out.println("");
     }
 }
 
@@ -41,176 +39,228 @@ class AVLTree{
     
     public void AVLadd(int num){
         AVLNode addedNode = simpleAVLadd(num, root);
-        AVLNode unbalancedNode = this.unbalancedNode(addedNode);
+        updateHeight(addedNode);
+        updateBalance(addedNode);
+        AVLNode unbalancedNode = unbalancedNode(addedNode);
         if(unbalancedNode != null){
             int balance = unbalancedNode.getBalance();
-            int leftBalance = unbalancedNode.getLeft().getBalance();
-            int rightBalance = unbalancedNode.getRight().getBalance();
+            int leftBalance;
+            if(unbalancedNode.getLeft() != null){
+                leftBalance = unbalancedNode.getLeft().getBalance();
+            }else{
+                leftBalance = 0;
+            }
+            int rightBalance;
+            if(unbalancedNode.getRight() != null){
+                rightBalance = unbalancedNode.getRight().getBalance();
+            }else{
+                rightBalance = 0;
+            }
             if(balance > 0){
                 if(leftBalance > 0){
-                    
+                    leftLeftRotation(unbalancedNode);
                 }else if(leftBalance < 0){
-                    
+                    leftRightRotation(unbalancedNode);
                 }
             }else if(balance < 0){
                 if(rightBalance > 0){
-                    
+                    rightLeftRotation(unbalancedNode);
                 }else if(rightBalance < 0){
-                    
+                    rightRightRotation(unbalancedNode);
                 }
             }
         }
     }
     
     private AVLNode simpleAVLadd(int num, AVLNode root){
-        AVLNode toReturn = new AVLNode(0);
         if(num < root.getData()){
             if(root.getLeft() == null){
-                toReturn = new AVLNode(num);
-                root.setLeft(toReturn);
-                toReturn.setParent(root);
+                root.setLeft(new AVLNode(num));
+                root.getLeft().setParent(root);
+                return(root.getLeft());
             }else{
-                simpleAVLadd(num, root.getLeft());
+                return(simpleAVLadd(num, root.getLeft()));
             }
         }else if(num > root.getData()){
             if(root.getRight() == null){
-                toReturn = new AVLNode(num);
-                root.setRight(toReturn);
-                toReturn.setParent(root);
+                root.setRight(new AVLNode(num));
+                root.getRight().setParent(root);
+                return(root.getRight());
             }else{
-                simpleAVLadd(num, root.getRight());
+                return(simpleAVLadd(num, root.getRight()));
             }
         }else{
             throw new RuntimeException("Fail insertion...!");
         }
-        return(toReturn);
     }
     
     private AVLNode unbalancedNode(AVLNode node){
-        if(node == this.root){
-            return(null);
-        }else if(Math.abs(node.getBalance()) >= 2){
+        if(Math.abs(node.getBalance()) >= 2){
             return(node);
         }else{
-            return(unbalancedNode(node.getParent()));
-        }
-    }
-    
-    private void leftRotate(AVLNode node){
-        AVLNode bufferNode = node.getRight();
-        node.setRight(bufferNode.getRight());
-    }
-    
-    /*
-    public void AVLadd(int num){
-        AVLadd(num, root);
-        AVLNode unbalancedNode = root.unbalancedNode();
-        
-        if(unbalancedNode != null){
-            System.out.println("unbalancedNode.balance(): " + unbalancedNode.balance());
-            System.out.println("unbalancedNode.getData(): " + unbalancedNode.getData());
-            System.out.println("num: " + num);
-            
-            int balance = unbalancedNode.balance();
-            
-            if(balance > 1 && num < unbalancedNode.getLeft().getData()){
-                rotateWithRightChild(unbalancedNode);
-            }else if(balance < -1 && num > unbalancedNode.getRight().getData()){
-                rotateWithLeftChild(unbalancedNode);
-            }else if(balance > 1 && num > unbalancedNode.getLeft().getData()){
-                doubleRotateWithRightChild(unbalancedNode);
-            }else if(balance < -1 && num < unbalancedNode.getRight().getData()){
-                doubleRotateWithLeftChild(unbalancedNode);
-            }
-        }
-    }
-    
-    private void AVLadd(int num, AVLNode node){
-        if(num < node.getData()){
-            if(node.getLeft() == null){
-                node.setLeft(new AVLNode(num));
-                AVLNode.height(node);
+            if(node.getParent() != null){
+                return(unbalancedNode(node.getParent()));
             }else{
-                AVLadd(num, node.getLeft());
+                return(null);
             }
-        }else if(num > node.getData()){
-            if(node.getRight() == null){
-                node.setRight(new AVLNode(num));
-                AVLNode.height(node);
-            }else{
-                AVLadd(num, node.getRight());
-            }
-        }else{
-            throw new RuntimeException("Insertion fail...!");
         }
     }
     
-    public AVLNode unbalanceNode(AVLNode node){
-        if(node == this.root){
-            return(new AVLNode(-1));
-        }else if(Math.abs(node.getBalance()) >= 2){
-            return(node);
-        }else{
-            return(unbalanceNode(node.getParent()));
+    /**
+     * It uses the printLevelOrder method from BinaryNode class.
+     */
+    public void printLevelOrder(){
+        if(root != null){
+            root.printLevelOrder( );
         }
     }
-    */
+    
+    /**
+     * It uses the printPreOrder method from BinaryNode class.
+     */
+    public void printPreOrder(){
+        if(root != null){
+            root.printPreOrder();
+        }
+    }
+    
+    /**
+     * It uses the printInOrder method from BinaryNode class.
+     */
+    public void printInOrder(){
+        if(root != null){
+            root.printInOrder( );
+        }
+    }
+    
+    /**
+     * It uses the printPostOrder method from BinaryNode class.
+     */
+    public void printPostOrder(){
+        if(root != null){
+            root.printPostOrder( );
+        }
+    }
+    
+    public void printBalances(){
+        if(root != null){
+            root.printBalances();
+        }
+    }
+    
+    public void printHeights(){
+        if(root != null){
+            root.printHeights();
+        }
+    }
+    
+    public void updateBalance(AVLNode node){
+        if(node == root){
+            AVLNode.updateBalance(root);
+        }else{
+            AVLNode.updateBalance(node);
+            updateBalance(node.getParent());
+        }
+    }
+    
+    public void updateHeight(AVLNode node){
+        if(node == root){
+            AVLNode.updateHeight(root);
+        }else{
+            AVLNode.updateHeight(node);
+            updateHeight(node.getParent());
+        }
+    }
     
     /**
      * [Single Rotation]************************************************
-     * Rotate binary tree node with left child, for AVL trees, this is a
-     * single rotation for case 1.
+     * Rotate binary tree node with left child.
      * @param BinaryNode object to do rotation.
-     * @return BinaryNode object what is in the k2 place rightnow.
-    
-    public static AVLNode rotateWithLeftChild(AVLNode k2){
-        AVLNode k1 = k2.getLeft();
-        k2.setLeft(k1.getRight());
-        k1.setRight(k2);
-        k2.setHeight(Math.max(AVLNode.updateHeight(k2.getLeft()), AVLNode.updateHeight(k2.getRight())) + 1);
-        k1.setHeight(Math.max(AVLNode.updateHeight(k1.getLeft()), AVLNode.updateHeight(k1.getRight())) + 1);
-        return(k1);
-    }
      */
+    private void leftLeftRotation(AVLNode node){
+        AVLNode buffer = node.getLeft();
+        if(buffer.getRight() != null){
+            buffer.getRight().setParent(node);
+            node.setLeft(buffer.getRight());
+        }else{
+            node.setLeft(null);
+        }
+        if(node == this.root){
+            buffer.setRight(node);
+            node.setParent(buffer);
+            this.root = buffer;
+            root.setParent(null);
+        }else{
+            AVLNode bufferParent = node.getParent();
+            buffer.setParent(node.getParent());
+            buffer.setRight(node);
+            node.setParent(buffer);
+            node.setLeft(null);
+            if(bufferParent.getLeft() == node){
+                bufferParent.setLeft(buffer);
+            }else if(bufferParent.getRight() == node){
+                bufferParent.setRight(buffer);
+            }
+        }
+        updateHeight(node);
+        updateBalance(node);
+    }
     
     /**
      * [Single Rotation]************************************************
-     * Rotate binary tree node with right child, for AVL trees, this is
-     * a single rotation for case 4.
+     * Rotate binary tree node with right child.
      * @param BinaryNode object to do rotation.
-     * @return BinaryNode object what is in the k1 place rightnow.
-    
-    public static AVLNode rotateWithRightChild(AVLNode k1){
-        AVLNode k2 = k1.getRight();
-        k1.setRight(k2.getLeft());
-        k2.setLeft(k1);
-        k2.setHeight(Math.max(AVLNode.updateHeight(k2.getLeft()), AVLNode.updateHeight(k2.getRight())) + 1);
-        k1.setHeight(Math.max(AVLNode.updateHeight(k1.getLeft()), AVLNode.updateHeight(k1.getRight())) + 1);
-        return(k2);
-    }
      */
+    private void rightRightRotation(AVLNode node){
+        AVLNode buffer = node.getRight();
+        if(buffer.getLeft() != null){
+            buffer.getLeft().setParent(node);
+            node.setRight(buffer.getLeft());
+        }else{
+            node.setRight(null);
+        }
+        if(node == this.root){
+            buffer.setLeft(node);
+            node.setParent(buffer);
+            this.root = buffer;
+            root.setParent(null);
+        }else{
+            AVLNode bufferParent = node.getParent();
+            buffer.setParent(node.getParent());
+            buffer.setLeft(node);
+            node.setParent(buffer);
+            node.setRight(null);
+            if(bufferParent.getLeft() == node){
+                bufferParent.setLeft(buffer);
+            }else if(bufferParent.getRight() == node){
+                bufferParent.setRight(buffer);
+            }
+        }
+        updateHeight(node);
+        updateBalance(node);
+    }
     
     /**
      * [Double Rotation]************************************************
-    * Double rotate binary tree node: first left child with its right child;
-    * then node k3 with new left child, for AVL trees, this is a double
-    * rotation for case 2.
-    public static AVLNode doubleRotateWithLeftChild(AVLNode k3){
-        k3.setLeft(rotateWithRightChild(k3.getLeft()));
-        return(rotateWithLeftChild(k3));
-    }
+     * Double rotate binary tree node: first left child with its right
+     * child; then unbalanced node with its new left child.
+     * @param BinaryNode object to do rotation.
      */
+    private void leftRightRotation(AVLNode node){
+        rightRightRotation(node.getLeft());
+        leftLeftRotation(node);
+    }
     
     /**
      * [Double Rotation]************************************************
-    * Double rotate binary tree node: first left child with its left child;
-    * then node k1 with new right child, for AVL trees, this is a double
-    * rotation for case 3.
-    public static AVLNode doubleRotateWithRightChild(AVLNode k1){
-        k1.setRight(rotateWithLeftChild(k1.getRight()));
-        return(rotateWithRightChild(k1));
-    }
+     * Double rotate binary tree node: first right child with its left
+     * child; then unbalanced node with its new right child.
+     * @param BinaryNode object to do rotation.
      */
+    private void rightLeftRotation(AVLNode node){
+        leftLeftRotation(node.getRight());
+        rightRightRotation(node);
+    }
 
     /**
      * @return the root
@@ -263,22 +313,105 @@ class AVLNode{
         this.left = leftChild;
         this.right = rightChild;
         this.data = data;
-        this.height = Math.max(leftChild.height, rightChild.height) + 1;
+        this.height = 1;
         this.balance = 0;
-        this.parent.updateBalance();
-        this.parent.updateHeight();
     }
     
-    /*
-    public AVLNode unbalancedNode(){
+    /**
+     * Update the balance of the node that invokes it.
+     */
+    public static void updateBalance(AVLNode node){
+        if(node.left == null && node.right != null){
+            node.balance = - node.right.height;
+        }else if(node.left != null && node.right == null){
+            node.balance = node.left.height;
+        }else if(node.left == null && node.right == null){
+            node.balance = 0;
+        }else{
+            node.balance = node.left.height - node.right.height;
+        }
+    }
+    
+    /**
+     * Update the height of the node that invokes it.
+     */
+    public static void updateHeight(AVLNode node){
+        if(node.left == null && node.right != null){
+            node.height = node.right.height + 1;
+        }else if(node.left != null && node.right == null){
+            node.height = node.left.height + 1;
+        }else if(node.left == null && node.right == null){
+            node.height = 1;
+        }else{
+            node.height = Math.max(node.left.height, node.right.height) + 1;
+        }
+    }
+    
+    /**
+     * Print tree rooted at current node using preorder traversal.
+     */
+    public void printPreOrder(){
+        System.out.print(getData() + " ");
+        if(getLeft() != null){
+            getLeft().printPreOrder();
+        }
+        if(getRight() != null){
+            getRight().printPreOrder();
+        }
+    }
+    
+    /**
+     * Print tree rooted at current node using inorder traversal.
+     */
+    public void printInOrder(){
+        if(left != null){
+            left.printInOrder();
+        }
+        System.out.print(getData() + " ");
+        if(right != null){
+            right.printInOrder();
+        }
+    }
+    
+    /**
+     * Print tree rooted at current node using postorder traversal.
+     */
+    public void printPostOrder(){
+        if(left != null){
+            left.printPostOrder();
+        }
+        if(right != null){
+            right.printPostOrder();
+        }
+        System.out.print(getData() + " ");
+    }
+    
+    /**
+     * printLevelOrder method uses the ArrayQueue class defined into 
+     * 'Section_16_1_Dynamic_Array_Implementations_Queue.java' file, in 
+     * this directory.
+     */
+    public void printLevelOrder(){
         ArrayQueue<AVLNode> queue = new ArrayQueue();
         queue.enqueue(this);
         while(!queue.isEmpty()){
             AVLNode bufferNode = queue.dequeue();
-            int balance = this.balance();
-            if(2 <= Math.abs(balance)){
-                return(this);
+            System.out.print(bufferNode.data + " ");
+            if(bufferNode.left != null){
+                queue.enqueue(bufferNode.left);
             }
+            if(bufferNode.right != null){
+                queue.enqueue(bufferNode.right);
+            }
+        }
+    }
+    
+    public void printBalances(){
+        ArrayQueue<AVLNode> queue = new ArrayQueue();
+        queue.enqueue(this);
+        while(!queue.isEmpty()){
+            AVLNode bufferNode = queue.dequeue();
+            System.out.print(bufferNode.getBalance() + " ");
             if(bufferNode.getLeft() != null){
                 queue.enqueue(bufferNode.getLeft());
             }
@@ -286,22 +419,21 @@ class AVLNode{
                 queue.enqueue(bufferNode.getRight());
             }
         }
-        return null;
-    }
-    */
-    
-    /**
-     * Update the balance of the node that invokes it.
-     */
-    public void updateBalance(){
-        this.balance = this.left.height - this.right.height;
     }
     
-    /**
-     * Update the height of the node that invokes it.
-     */
-    public void updateHeight(){
-        this.height = Math.max(this.left.height, this.right.height) + 1;
+    public void printHeights(){
+        ArrayQueue<AVLNode> queue = new ArrayQueue();
+        queue.enqueue(this);
+        while(!queue.isEmpty()){
+            AVLNode bufferNode = queue.dequeue();
+            System.out.print(bufferNode.getHeight() + " ");
+            if(bufferNode.getLeft() != null){
+                queue.enqueue(bufferNode.getLeft());
+            }
+            if(bufferNode.getRight() != null){
+                queue.enqueue(bufferNode.getRight());
+            }
+        }
     }
     
     /**
@@ -372,6 +504,5 @@ class AVLNode{
      */
     public void setParent(AVLNode parent) {
         this.parent = parent;
-        parent.updateBalance();
     }
 }
