@@ -14,6 +14,14 @@ public class Section_19_4_AVL_Tree{
         System.out.println("AVL Tree printed in Level Order Transversal:");
         avlTree.printLevelOrder();
         System.out.println("");
+        
+        avlTree.AVLremove(30);
+        
+        System.out.println("AVL Tree printed in Level Order Transversal after remove:");
+        avlTree.printLevelOrder();
+        System.out.println("");
+        
+        System.out.println("root: " + avlTree.getRoot().getData());
     }
 }
 
@@ -38,10 +46,14 @@ class AVLTree{
     }
     
     public void AVLadd(int num){
-        AVLNode addedNode = simpleAVLadd(num, root);
+        AVLNode addedNode = simpleAdd(num, root);
         updateHeight(addedNode);
         updateBalance(addedNode);
         AVLNode unbalancedNode = unbalancedNode(addedNode);
+        makeRotation(unbalancedNode);
+    }
+    
+    private void makeRotation(AVLNode unbalancedNode){
         if(unbalancedNode != null){
             int balance = unbalancedNode.getBalance();
             int leftBalance;
@@ -72,14 +84,14 @@ class AVLTree{
         }
     }
     
-    private AVLNode simpleAVLadd(int num, AVLNode root){
+    private AVLNode simpleAdd(int num, AVLNode root){
         if(num < root.getData()){
             if(root.getLeft() == null){
                 root.setLeft(new AVLNode(num));
                 root.getLeft().setParent(root);
                 return(root.getLeft());
             }else{
-                return(simpleAVLadd(num, root.getLeft()));
+                return(simpleAdd(num, root.getLeft()));
             }
         }else if(num > root.getData()){
             if(root.getRight() == null){
@@ -87,10 +99,117 @@ class AVLTree{
                 root.getRight().setParent(root);
                 return(root.getRight());
             }else{
-                return(simpleAVLadd(num, root.getRight()));
+                return(simpleAdd(num, root.getRight()));
             }
         }else{
             throw new RuntimeException("Fail insertion...!");
+        }
+    }
+    
+    public void AVLremove(int data){
+        AVLNode toRebalance = simpleRemove(data);
+        updateHeight(toRebalance);
+        updateBalance(toRebalance);
+        AVLNode unbalancedNode = unbalancedNode(toRebalance);
+        makeRotation(unbalancedNode);
+    }
+    
+    private AVLNode simpleRemove(int data){
+        AVLNode toRemove = search(data);
+        if(toRemove == null){
+            return(null);
+        }
+        // Case 1: node to be deleted is a leaf.
+        if(toRemove.getLeft() == null && toRemove.getRight() == null){
+            AVLNode parent = toRemove.getParent();
+            if(parent.getLeft() == toRemove){
+                parent.setLeft(null);
+            }else{
+                parent.setRight(null);
+            }
+            return(parent);
+        // Case 2: node to be deleted has only one child.
+        }else if(toRemove.getLeft() == null ^ toRemove.getRight() == null){
+            AVLNode parent = toRemove.getParent();
+            if(toRemove.getLeft() != null){
+                AVLNode child = toRemove.getLeft();
+                if(parent.getLeft() == toRemove){
+                    parent.setLeft(child);
+                }else{
+                    parent.setRight(child);
+                }
+                child.setParent(parent);
+            }else{
+                AVLNode child = toRemove.getRight();
+                if(parent.getLeft() == toRemove){
+                    parent.setLeft(child);
+                }else{
+                    parent.setRight(child);
+                }
+                child.setParent(parent);
+            }
+            return(parent);
+        // Case 3: node to be deleted has two children.
+        }else{
+            AVLNode nextNode = nextNode(data);
+            simpleRemove(nextNode.getData());
+            if(toRemove.getRight() != null){
+                nextNode.setRight(toRemove.getRight());
+                toRemove.getRight().setParent(nextNode);
+            }
+            if(toRemove.getLeft() != null){
+                nextNode.setLeft(toRemove.getLeft());
+                toRemove.getLeft().setParent(nextNode);
+            }
+            if(toRemove == root){
+                root = nextNode;
+                nextNode.setParent(null);
+                return(root);
+            }else{
+                if(toRemove.getParent().getRight() == toRemove){
+                    toRemove.getParent().setRight(nextNode);
+                }else{
+                    toRemove.getParent().setLeft(nextNode);
+                }
+                nextNode.setParent(toRemove.getParent());
+                return(nextNode);
+            }
+            
+        }
+    }
+    
+    private AVLNode nextNode(int data){
+        AVLNode buffer = search(data);
+        AVLNode nextNode = buffer.getRight();
+        while(true){
+            if(nextNode.getLeft() == null){
+                break;
+            }else{
+                nextNode = nextNode.getLeft();
+            }
+        }
+        return(nextNode);
+    }
+    
+    private AVLNode search(int data){
+        return(search(data, this.root));
+    }
+    
+    private AVLNode search(int data, AVLNode root){
+        if(data == root.getData()){
+            return(root);
+        }else if(data > root.getData()){
+            if(root.getRight() != null){
+                return(search(data, root.getRight()));
+            }else{
+                return(null);
+            }
+        }else{
+            if(root.getLeft() != null){
+                return(search(data, root.getLeft()));
+            }else{
+                return(null);
+            }
         }
     }
     
@@ -154,7 +273,7 @@ class AVLTree{
         }
     }
     
-    public void updateBalance(AVLNode node){
+    private void updateBalance(AVLNode node){
         if(node == root){
             AVLNode.updateBalance(root);
         }else{
@@ -163,7 +282,7 @@ class AVLTree{
         }
     }
     
-    public void updateHeight(AVLNode node){
+    private void updateHeight(AVLNode node){
         if(node == root){
             AVLNode.updateHeight(root);
         }else{
