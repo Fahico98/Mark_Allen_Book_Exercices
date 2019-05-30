@@ -192,7 +192,7 @@ class AVLTree{
     }
     
     private AVLNode search(int data){
-        return(search(data, this.root));
+        return(search(data, root));
     }
     
     private AVLNode search(int data, AVLNode root){

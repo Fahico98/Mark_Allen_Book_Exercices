@@ -107,8 +107,7 @@ class ArrayQueue<AnyType>{
     }
     
     /**
-     * Get the least recently inserted item in the queue, does not alter
-     * the queue.
+     * Get the least recently inserted item in the queue, does not alter the queue.
      * @return the least recently inserted item in the queue.
      * @throws UnderflowException if the queue is empty.
      */

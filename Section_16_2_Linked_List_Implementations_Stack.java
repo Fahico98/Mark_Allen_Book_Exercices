@@ -37,21 +37,21 @@ public class Section_16_2_Linked_List_Implementations_Stack {
 
 class ListStack<AnyType>{
     
-    private ListStackNode<AnyType> topOfStack = null;
+    private ListStackNode<AnyType> topStack = null;
     
     /**
      * Test if the stack is logically empty.
      * @return true if empty, false otherwise. 
      */
     public boolean isEmpty(){
-        return(topOfStack == null);
+        return(topStack == null);
     }
     
     /**
      * Make the stack logically empty.
      */
     public void makeEmpty(){
-        topOfStack = null;
+        topStack = null;
     }
     
     /**
@@ -59,7 +59,7 @@ class ListStack<AnyType>{
     * @param x the item to insert.
     */
     public void push(AnyType x){
-        topOfStack = new ListStackNode<AnyType>(x, topOfStack);
+        topStack = new ListStackNode<AnyType>(x, topStack);
     }
     
     /**
@@ -70,7 +70,7 @@ class ListStack<AnyType>{
         if(isEmpty()){
             throw new RuntimeException("ListStack pop");
         }
-        topOfStack = topOfStack.next;
+        topStack = topStack.next;
     }
     
     /**
@@ -83,7 +83,7 @@ class ListStack<AnyType>{
         if(isEmpty()){
             throw new RuntimeException( "ListStack top" );
         }
-        return(topOfStack.element);
+        return(topStack.data);
     }
     
     /**
@@ -95,8 +95,8 @@ class ListStack<AnyType>{
         if(isEmpty()){
             throw new RuntimeException( "ListStack topAndPop" );
         }
-        AnyType topItem = topOfStack.element;
-        topOfStack = topOfStack.next;
+        AnyType topItem = topStack.data;
+        topStack = topStack.next;
         return topItem;
     }
     
@@ -107,9 +107,9 @@ class ListStack<AnyType>{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("[\n");
-        ListStackNode<AnyType> bufferNode = topOfStack;
+        ListStackNode<AnyType> bufferNode = topStack;
         while(bufferNode != null){
-            sb.append("\t").append(bufferNode.element).append("\n");
+            sb.append("\t").append(bufferNode.data).append("\n");
             bufferNode = bufferNode.next;
         }
         sb.append("]\n");
@@ -119,15 +119,15 @@ class ListStack<AnyType>{
 
 class ListStackNode<AnyType>{
     
-    public AnyType element;
+    public AnyType data;
     public ListStackNode next;
     
-    public ListStackNode(AnyType theElement){
-        this(theElement, null);
+    public ListStackNode(AnyType data){
+        this(data, null);
     }
     
-    public ListStackNode(AnyType theElement, ListStackNode<AnyType> n){
-        element = theElement;
-        next = n;
+    public ListStackNode(AnyType data, ListStackNode<AnyType> n){
+        this.data = data;
+        this.next = n;
     }
 }

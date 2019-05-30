@@ -57,7 +57,7 @@ class ListQueue<AnyType>{
         if(isEmpty()){
             throw new RuntimeException( "ListQueue getFront" );
         }
-        return front.element;
+        return front.data;
     }
     
     /**
@@ -96,7 +96,7 @@ class ListQueue<AnyType>{
         if(isEmpty()){
             throw new RuntimeException("ListQueue dequeue");
         }
-        AnyType returnValue = front.element;
+        AnyType returnValue = front.data;
         front = front.next;
         return returnValue;
     }
@@ -110,7 +110,7 @@ class ListQueue<AnyType>{
         sb.append("[\n");
         ListQueueNode<AnyType> bufferNode = front;
         while(bufferNode != null){
-            sb.append("\t").append(bufferNode.element).append("\n");
+            sb.append("\t").append(bufferNode.data).append("\n");
             bufferNode = bufferNode.next;
         }
         sb.append("]\n");
@@ -120,15 +120,15 @@ class ListQueue<AnyType>{
 
 class ListQueueNode<AnyType>{
     
-    public AnyType element;
+    public AnyType data;
     public ListQueueNode next;
     
-    public ListQueueNode(AnyType theElement){
-        this(theElement, null);
+    public ListQueueNode(AnyType data){
+        this(data, null);
     }
     
-    public ListQueueNode(AnyType theElement, ListQueueNode<AnyType> n){
-        element = theElement;
-        next = n;
+    public ListQueueNode(AnyType data, ListQueueNode<AnyType> n){
+        this.data = data;
+        this.next = n;
     }
 }

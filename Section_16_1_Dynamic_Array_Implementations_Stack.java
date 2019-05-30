@@ -59,6 +59,11 @@ class ArrayStack<AnyType>{
         topOfStack = -1;
     }
     
+    public ArrayStack(AnyType[] array){
+        theArray = array;
+        topOfStack = array.length - 1;
+    }
+    
     /**
      * Test if the stack is logically empty.
      * @return true if empty, false otherwise. 
